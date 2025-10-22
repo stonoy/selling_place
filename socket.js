@@ -71,6 +71,8 @@ const initialSocket = (server) => {
 
                 newMessage = {...newMessage, createdAt: new Date(Date.now())}
 
+                // console.log(roomId, chatId, newMessage)
+
                 // send the newMessage to the room
                 io.to(roomId).emit("receiveMessage", ({chatId, newMessage}))
             })

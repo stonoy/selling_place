@@ -17,12 +17,19 @@ const ChatPage = () => {
 
   useEffect(() => {
       // get the chatHeads
-      dispatch(getChatHeads())
-
-      if (socket){
-        chatHeads.forEach((chat) => {
+      dispatch(getChatHeads()).then((data) => {
+        // console.log(data?.payload)
+        if (socket){
+        data?.payload?.myChatHeads.forEach((chat) => {
           socket.emit("joinroom", ({toUserId: user._id, fromUserId: chat.participants.find(p => p._id !== user?._id)?._id}))
         })
+      }
+      })
+
+      if (socket){
+        // chatHeads.forEach((chat) => {
+        //   socket.emit("joinroom", ({toUserId: user._id, fromUserId: chat.participants.find(p => p._id !== user?._id)?._id}))
+        // })
 
         socket.on("receiveMessage", ({chatId, newMessage}) => {
                   

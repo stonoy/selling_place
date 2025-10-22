@@ -27,7 +27,7 @@ function ChatBox({ chat }) {
         
 
         socket.on("receiveMessage", ({chatId, newMessage}) => {
-          // console.log("receive msg")
+          // console.log(chatId, newMessage)
           // find the chatHead and update last message
           dispatch(addLastMsgViaSocket({chatId, newMessage}))
 

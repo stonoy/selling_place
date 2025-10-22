@@ -43,6 +43,7 @@ export const createChat = createAsyncThunk("chat/createChat",
 
 export const removeFromActiveChatList = createAsyncThunk("chat/removeFromActiveChatList",
     async (chatId,thunkAPI) => {
+        
         try {
             const resp = await customFetch.patch(`/removefromchatactive/${chatId}`)
             return resp?.data?.msg

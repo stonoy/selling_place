@@ -22,13 +22,23 @@ const FullChat = () => {
       // get the chat using chatId
     dispatch(getTheChat(selectedChatId)).then(() => {
       // if no chatHeads are present fetch them
-    dispatch(getChatHeads())
-    })
-
-      if (socket){
-        chatHeads.forEach((chat) => {
+    dispatch(getChatHeads()).then((data) => {
+      // console.log(data)
+        if (socket){
+        data?.payload?.myChatHeads.forEach((chat) => {
           socket.emit("joinroom", ({toUserId: user._id, fromUserId: chat.participants.find(p => p._id !== user?._id)?._id}))
         })
+      }
+      })
+    })
+
+    // console.log(socket)
+
+      if (socket){
+        
+        // chatHeads.forEach((chat) => {
+        //   socket.emit("joinroom", ({toUserId: user._id, fromUserId: chat.participants.find(p => p._id !== user?._id)?._id}))
+        // })
 
         // -> to set old messages seen when user opens a chat
         // emit socket with chatId and userId, when user opens a chat

@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { FaSearch } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import SelectBox from './SelectBox';
@@ -11,11 +11,12 @@ import UserDropDown from './UserDropDown';
 import MainLogo from './MainLogo';
 import SelectLanguages from './SelectLanguages';
 import { getProducts, getSuggestions, resetProducts, resetSuggestions } from '../feature/productSlice';
-import { resetChat } from '../feature/chatSlice';
+import { removeFromActiveChatList, resetChat } from '../feature/chatSlice';
 
 const Header = () => {
   const {loading, productTypes, locations} = useSelector(state => state.product)
   const {user} = useSelector(state => state.user)
+  const {theChat} = useSelector(state => state.chat)
   const [typeIdx, setTypeIdx] = useState(0)
     const [inputValue, setInputValue] = useState("")
     const navigate = useNavigate()
@@ -23,6 +24,8 @@ const Header = () => {
     const intId = useRef(null)
 
     // console.log(loading, productTypes, locations, user, typeIdx, inputValue)
+
+    // console.log(theChat)
 
   useEffect(() => {
     let inputInt
@@ -50,12 +53,19 @@ const Header = () => {
   const handleLogout = useCallback(() => {
     const logout = async () => {
     try {
-      await customFetch.post("/logout")
-      localStorage.clear()
-      dispatch(resetChat())
-      dispatch(resetUser())
-      dispatch(resetProducts())
-      navigate("/login")
+      dispatch(removeFromActiveChatList(theChat?._id)).then(() => {
+        const logoutInside = async () => {
+          await customFetch.post("/logout")
+          localStorage.clear()
+          dispatch(resetChat())
+          dispatch(resetUser())
+          dispatch(resetProducts())
+          navigate("/login")
+        }
+
+        logoutInside()
+      })
+      
     } catch (error) {
       console.log(error)
       localStorage.clear()
@@ -67,7 +77,7 @@ const Header = () => {
   }
 
   logout()
-  }, [])
+  }, [theChat])
 
   const handleDebounce = (e) => {
     const text = e.target.value
