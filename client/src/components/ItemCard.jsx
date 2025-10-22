@@ -44,7 +44,7 @@ const ItemCard = ({ item}) => {
         <Link to={`/product/${item._id}`} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className="block ">
       
       {/* Featured label */}
-      {item.isFeatured && (
+      {item?.featured && (
         <span className="absolute top-2 left-2 bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded z-10">
           Featured
         </span>
