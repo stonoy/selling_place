@@ -29,7 +29,7 @@ const Login = () => {
     }
 
     const handleGoogle =  () => {
-        window.location.href = location.hostname === "localhost" ? "http://localhost:8080/api/google" : "/api/google"
+        window.location.href = location.hostname === "localhost" ? "http://localhost:8080/api/google" : "https://selling-place.onrender.com/api/google"
     }
 
   return (
