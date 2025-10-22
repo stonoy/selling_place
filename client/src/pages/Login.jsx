@@ -29,7 +29,7 @@ const Login = () => {
     }
 
     const handleGoogle =  () => {
-        window.location.href = "http://localhost:8080/api/google";
+        window.location.href = location.hostname === "localhost" ? "http://localhost:8080/api/google" : "/api/google"
     }
 
   return (
