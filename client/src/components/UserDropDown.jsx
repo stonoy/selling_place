@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const UserDropDown = ({user, handleLogout}) => {
   return (
-    <details className="dropdown">
+    <details className="hidden sm:dropdown">
   <summary className="btn m-1">
     <p>{user?.name}</p>
     {/* <img src={user?.avater} alt={user?.name} className='w-10 h-5 rounded-full'/> */}

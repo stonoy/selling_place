@@ -22,10 +22,10 @@ const FilterPage = () => {
 
   return (
     <section className='flex gap-2'>
-        <div className='w-1/4'>
+        <div className='w-1/3 sm:w-1/4'>
             <Sidebar type={type} />
         </div>
-        <div className='w-3/4'>
+        <div className='w-2/3 sm:w-3/4'>
             <div className='flex justify-center items-center flex-wrap gap-4'>
               {
                 products?.map(product => <ItemCard key={product._id} item={product} />)

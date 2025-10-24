@@ -180,7 +180,7 @@ export default function AddProduct() {
             {/* Images */}
             <div>
               <label className="label">
-                <span className="label-text">Upload Images (press "enter" to add image url)</span>
+                <span className="label-text whitespace-normal">Upload Images (press "enter" to add image url)</span>
               </label>
               <input
                 type="text"

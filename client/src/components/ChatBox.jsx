@@ -1,9 +1,10 @@
 import React, { memo, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { addLastMsgViaSocket, addNewMessageViaSocket, removeFromActiveChatList, removeTyping, setTyping } from '../feature/chatSlice';
 import { useRef } from 'react';
 import { getLastSeen } from '../feature/userSlice';
+import { FaArrowLeft } from "react-icons/fa";
 
 function ChatBox({ chat }) {
   const {user, onlineUsers, userSubmitting} = useSelector(state => state.user)
@@ -114,6 +115,9 @@ function ChatBox({ chat }) {
     <div className="flex flex-col h-[80vh]">
       {/* Top area */}
       <div className="p-4 border-b flex items-center">
+        <Link to="/chat" className='mr-2'>
+          <FaArrowLeft />
+        </Link>
         <img
           src={other?.avater}
           alt={other?.name}

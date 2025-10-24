@@ -3,6 +3,7 @@ import { useOutletContext, useParams } from 'react-router-dom';
 import { ChatHead } from '../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLastMsgViaSocket, getChatHeads, removeTyping, setTyping } from '../feature/chatSlice';
+import { resetFilters } from '../feature/productSlice';
 
 
 // make : if user present then this page renders
@@ -16,6 +17,8 @@ const ChatPage = () => {
   // console.log(chatHeads, isLoading, user)
 
   useEffect(() => {
+      // reset all query/filters
+      dispatch(resetFilters())
       // get the chatHeads
       dispatch(getChatHeads()).then((data) => {
         // console.log(data?.payload)

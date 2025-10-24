@@ -13,6 +13,7 @@ const SelectBox = ({loading, locations}) => {
         className="select select-ghost w-full pl-10 bg-white border-2 border-black" // add left padding for icon
         disabled={loading}
         onChange={(e) => {
+          e.target.blur();
           dispatch(landingMakeQuery({location: e.target.value}))
           // dispatch(getProducts())
           // navigate to home page

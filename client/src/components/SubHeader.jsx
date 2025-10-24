@@ -39,7 +39,7 @@ const SubHeader = () => {
                 <FaArrowDown className={`transition-transform duration-500 ${showMenu ? "rotate-180" : "rotate-0"}`}/></button>
         </div>
         {/* Types */}
-        <div className='flex justify-center items-center gap-2'>
+        <div className='hidden sm:flex justify-center items-center gap-2'>
             {
                 productTypes.slice(0,8).map((type,i) => {
                     return (
@@ -48,7 +48,7 @@ const SubHeader = () => {
                 })
             }
         </div>
-        <div>
+        <div className=''>
             <h1>{new Date().toLocaleDateString()}</h1>
         </div>
         {/* Mega menu */}

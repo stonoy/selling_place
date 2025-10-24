@@ -4,6 +4,7 @@ import { useOutletContext, useParams } from 'react-router-dom';
 import { ChatBox } from '../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getChatHeads, getTheChat, removeFromActiveChatList, updateLastMsgSeen, updateMsgsSeen } from '../feature/chatSlice';
+import { resetFilters } from '../feature/productSlice';
 
 // make : if user present then this page renders
 
@@ -18,7 +19,8 @@ const FullChat = () => {
   
 
   useEffect(() => {
-    
+    // reset all query/filters
+          dispatch(resetFilters())
       // get the chat using chatId
     dispatch(getTheChat(selectedChatId)).then(() => {
       // if no chatHeads are present fetch them

@@ -73,7 +73,7 @@ const HomeLayOut = () => {
           <SubHeader />
           <Queries />
         </section>
-        <section className='max-w-4xl mx-auto'>
+        <section className='max-w-4xl mx-auto flex-1 min-h-[calc(100vh-200px)]'>
             <Outlet context={{socket}} />
             
         </section>
