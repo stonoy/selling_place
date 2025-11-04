@@ -1,11 +1,12 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import { AddProduct, ChatPage, FilterPage, FullChat, HomeLayOut, Landing, Login, MyProducts, Register, SingleProduct } from "./pages"
+import { ErrorPage } from "./components"
 
 const router = createBrowserRouter([
   {
     path: "/:provider?",
     element: <HomeLayOut />,
-    errorElement: <h1>Something went wrong...</h1>,
+    errorElement: <ErrorPage/>,
     children: [
       {
         index: true,
@@ -20,11 +21,11 @@ const router = createBrowserRouter([
         element: <SingleProduct />
       },
       {
-        path: "chat",
+        path: "chat", // protected
         element: <ChatPage />
       },
       {
-        path: "chat/:chatId",
+        path: "chat/:chatId", // protected
         element: <FullChat />
       },
       {
@@ -32,9 +33,10 @@ const router = createBrowserRouter([
         element: <AddProduct />
       },
       {
-        path: "myproducts",
+        path: "myproducts", // protected
         element: <MyProducts />
-      }
+      },
+      { path: "*", element: <ErrorPage /> }
     ]
   },
   {

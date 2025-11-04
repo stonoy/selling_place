@@ -2,15 +2,22 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMyProducts } from '../feature/productSlice'
 import { ItemCard, Loader } from '../components'
+import { useNavigate } from 'react-router-dom'
 
 const MyProducts = () => {
   const {loading, myProducts} = useSelector(state => state.product)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     // console.log(loading, products, queryObj)
 
     useEffect(() => {
-        dispatch(getMyProducts())
+        dispatch(getMyProducts()).then(({type}) => {
+          if (type !== "product/getMyProducts/fulfilled"){
+            localStorage.clear()
+            navigate("/login")
+          }
+        })
     }, [])
 
     // console.log(products)

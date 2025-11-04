@@ -16,7 +16,7 @@ const SearchSuggestions = () => {
           loading ?
           <h1 className='w-full'>Loading...</h1>
           :
-          <div className='flex flex-col gap-1 '>
+          <div className='flex flex-col gap-1 h-auto'>
             {
               suggestions?.map((suggestion,i) => {
                 return (

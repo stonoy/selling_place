@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import ChatHead from '../components/ChatHead';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { ChatBox } from '../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getChatHeads, getTheChat, removeFromActiveChatList, updateLastMsgSeen, updateMsgsSeen } from '../feature/chatSlice';
@@ -14,6 +14,7 @@ const FullChat = () => {
   const {user} = useSelector(state => state.user)
   const dispatch = useDispatch()
   const {socket} = useOutletContext()
+  const navigate = useNavigate()
 
   // console.log(theChat,chatHeads, isLoading, selectedChatId, user)
   
@@ -22,7 +23,13 @@ const FullChat = () => {
     // reset all query/filters
           dispatch(resetFilters())
       // get the chat using chatId
-    dispatch(getTheChat(selectedChatId)).then(() => {
+    dispatch(getTheChat(selectedChatId)).then(({type}) => {
+
+      if (type !== "chat/getTheChat/fulfilled"){
+        localStorage.clear()
+          navigate("/login")
+          return
+      }
       // if no chatHeads are present fetch them
     dispatch(getChatHeads()).then((data) => {
       // console.log(data)

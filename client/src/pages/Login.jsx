@@ -59,7 +59,8 @@ const Login = () => {
         <p>new here <Link to="/register" className='underline text-neutral'>register</Link></p>
         
       </form>
-      <button onClick={handleGoogle}>
+      <div className="divider divider-primary mx-3 sm:mx-6">Or</div>
+      <button onClick={handleGoogle} className='w-fit text-xl mx-auto mt-2 py-2'>
             <FaGoogle />
         </button>
     </div>

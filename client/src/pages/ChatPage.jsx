@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { ChatHead } from '../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLastMsgViaSocket, getChatHeads, removeTyping, setTyping } from '../feature/chatSlice';
@@ -13,6 +13,7 @@ const ChatPage = () => {
   const {user} = useSelector(state => state.user)
   const dispatch = useDispatch()
   const {socket} = useOutletContext()
+  const navigate = useNavigate()
 
   // console.log(chatHeads, isLoading, user)
 
@@ -20,10 +21,15 @@ const ChatPage = () => {
       // reset all query/filters
       dispatch(resetFilters())
       // get the chatHeads
-      dispatch(getChatHeads()).then((data) => {
-        // console.log(data?.payload)
+      dispatch(getChatHeads()).then(({type, payload}) => {
+        if (type !== "chat/getChatHeads/fulfilled"){
+          localStorage.clear()
+          navigate("/login")
+          return
+        }
+
         if (socket){
-        data?.payload?.myChatHeads.forEach((chat) => {
+        payload?.myChatHeads.forEach((chat) => {
           socket.emit("joinroom", ({toUserId: user._id, fromUserId: chat.participants.find(p => p._id !== user?._id)?._id}))
         })
       }
@@ -42,7 +48,7 @@ const ChatPage = () => {
         })
 
         socket.on("showTyping", ({typerId, chatId}) => {
-          console.log("typing", typerId, chatId)
+          
                   // show typing effect if by other user
                   if (typerId !== user?._id){
                     // find the chatHead and update typing

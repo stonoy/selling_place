@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser, registerUser } from '../feature/userSlice'
 import { ImSpinner9 } from 'react-icons/im'
+import { FaGoogle } from 'react-icons/fa6'
 
 const Register = () => {
     const {userSubmitting} = useSelector(state => state.user)
@@ -24,6 +25,10 @@ const Register = () => {
             navigate("/login")
           }
         })
+    }
+
+    const handleGoogle =  () => {
+        window.location.href = location.hostname === "localhost" ? "http://localhost:8080/api/google" : "https://selling-place.onrender.com/api/google"
     }
 
   return (
@@ -53,7 +58,10 @@ const Register = () => {
                 </button>
         <p>already a member <Link to="/login" className='underline text-neutral'>login</Link></p>
       </form>
-      
+      <div className="divider divider-primary mx-3 sm:mx-6">Or</div>
+            <button onClick={handleGoogle} className='w-fit text-xl mx-auto mt-2 py-2'>
+                  <FaGoogle />
+              </button>
     </div>
   </div>
 </div>
