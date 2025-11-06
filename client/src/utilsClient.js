@@ -124,3 +124,5 @@ export const chatList = [
     ]
   }
 ];
+
+export const No_Pic = `https://cdn.pixabay.com/photo/2020/08/07/00/27/forbidden-5469452_1280.png`

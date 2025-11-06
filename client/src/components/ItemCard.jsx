@@ -3,6 +3,7 @@ import { FaHeart } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { addToWishList } from "../feature/userSlice";
+import { No_Pic } from "../utilsClient";
 
 const ItemCard = ({ item}) => {
     const [hover, setHover] = useState(false)
@@ -10,6 +11,7 @@ const ItemCard = ({ item}) => {
     const {user, userSubmitting} = useSelector(state => state.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const itemPic = item?.images?.[imgId] || No_Pic
 
     useEffect(() => {
         let intId
@@ -53,7 +55,7 @@ const ItemCard = ({ item}) => {
       {/* Image carousel */}
       <div className="w-full h-48 overflow-hidden relative">
         <img
-          src={item.images[imgId]}
+          src={itemPic}
           alt={item.title}
           className="w-full h-full object-cover transition-all duration-300"
         />

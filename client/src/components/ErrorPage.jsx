@@ -1,16 +1,39 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useRouteError } from 'react-router-dom'
 import { customFetch } from '../utilsClient'
+import { removeFromActiveChatList, resetChat } from '../feature/chatSlice'
+import { resetUser } from '../feature/userSlice'
+import { resetProducts } from '../feature/productSlice'
 
 const ErrorPage = () => {
   const navigate = useNavigate()
-  const dispatch=useDispatch()
+  const {theChat} = useSelector(state => state.chat)
+  const dispatch = useDispatch()
 
     const delStorage = async () => {
-        await customFetch.post("/logout")
-        localStorage.clear()
-        navigate("/")
+         try {
+              dispatch(removeFromActiveChatList(theChat?._id)).then(() => {
+                const logoutInside = async () => {
+                  await customFetch.post("/logout")
+                  localStorage.clear()
+                  dispatch(resetChat())
+                  dispatch(resetUser())
+                  dispatch(resetProducts())
+                  navigate("/")
+                }
+        
+                logoutInside()
+              })
+              
+            } catch (error) {
+              console.log(error)
+              localStorage.clear()
+              dispatch(resetChat())
+              dispatch(resetUser())
+              dispatch(resetProducts())
+              navigate("/login")
+            }
     }
     
   return (
